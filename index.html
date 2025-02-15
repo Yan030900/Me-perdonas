@@ -76,6 +76,11 @@
 </head>
 <body>
 
+    <audio id="musicaFondo" autoplay loop>
+        <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
@@ -85,6 +90,11 @@
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let audio = document.getElementById("musicaFondo");
+            audio.volume = 0.2; // Ajusta el volumen al 20%
+        });
+
         let primerClick = true;
         let maxAncho = window.innerWidth * 0.8;
         let minTamañoNo = 5;
