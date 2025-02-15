@@ -84,16 +84,12 @@
     </div>
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
-    <!-- Audio -->
-    <audio id="musicaFondo" loop autoplay>
+    <audio id="musicaFondo" loop>
         <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie.mp3" type="audio/mpeg">
         Tu navegador no soporta audio HTML5.
     </audio>
 
     <script>
-        let audio = document.getElementById("musicaFondo");
-        audio.volume = 0.2; // Volumen al 20%
-
         let primerClick = true;
         let maxAncho = window.innerWidth * 0.8;
         let minTamañoNo = 5;
@@ -107,7 +103,17 @@
             "Plz", "Tqm", "Siii"
         ];
 
+        let audio = document.getElementById("musicaFondo");
+        audio.volume = 0.2; // Volumen al 20%
+
+        function iniciarMusica() {
+            if (audio.paused) {
+                audio.play().catch(error => console.log("El navegador bloqueó el autoplay:", error));
+            }
+        }
+
         function moverBoton() {
+            iniciarMusica(); // Iniciar música con la primera interacción
             let botonNo = document.querySelector('.no');
             let botonSi = document.querySelector('.yes');
 
@@ -171,8 +177,8 @@
         function mostrarMensaje() {
             document.getElementById("mensaje").style.display = "block";
             lanzarConfeti();
+            iniciarMusica(); // Iniciar música con la primera interacción
 
-            // Cambiar el GIF asegurando que se recargue correctamente
             let imagen = document.querySelector('.image');
             imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
         }
