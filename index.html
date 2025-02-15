@@ -62,7 +62,7 @@
         .no {
             background-color: red;
             color: white;
-            position: relative;
+            position: absolute;
             z-index: 5;
         }
         .hidden {
@@ -82,7 +82,7 @@
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
         <button class="btn yes" onclick="iniciarMusica(); mostrarMensaje()">SÍ!!!</button>
-        <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
+        <button class="btn no" onclick="iniciarMusica(); moverBoton()" onmouseenter="iniciarMusica(); moverBoton()" onmouseover="iniciarMusica(); moverBoton()">No.</button>
     </div>
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
@@ -118,11 +118,6 @@
             let botonNo = document.querySelector('.no');
             let botonSi = document.querySelector('.yes');
 
-            if (primerClick) {
-                musica.play();
-                primerClick = false;
-            }
-
             let maxWidth = window.innerWidth - botonNo.clientWidth;
             let maxHeight = window.innerHeight - botonNo.clientHeight;
 
@@ -137,7 +132,7 @@
                 nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
             );
 
-            botonNo.style.position = "absolute";
+            botonNo.style.transition = "left 0.3s ease, top 0.3s ease";
             botonNo.style.left = `${nuevoX}px`;
             botonNo.style.top = `${nuevoY}px`;
 
