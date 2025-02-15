@@ -76,7 +76,7 @@
 </head>
 <body>
 
-    <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/IMG_2018.gif" alt="Cinnamoroll triste">
+    <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
         <button class="btn yes" onclick="mostrarMensaje()">SÍ!!!</button>
@@ -163,8 +163,9 @@
             document.getElementById("mensaje").style.display = "block";
             lanzarConfeti();
 
-            // Cambiar el GIF de Cinnamoroll
-            document.querySelector('.image').src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/IMG_2020.gif";
+            // Cambiar el GIF asegurando que se recargue correctamente
+            let imagen = document.querySelector('.image');
+            imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
         }
 
         function lanzarConfeti() {
