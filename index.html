@@ -87,13 +87,23 @@
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
     <script>
-        let primerClick = true;
         let musica = document.getElementById("musica");
+        let primerClick = true;
+        let contadorNo = 0;
+        let frasesNo = [
+            "No", "pero segura?", "Segura?", "Segurísima?", "Por favor", 
+            "Segurisima?", "Sorry mi Bren", "Perdónameee", "Ya deja de darle aquí", 
+            "Di que si", "Apoco si muy enojada", "Ultima oportunidad", "Ultima ultima", 
+            "Pégame pero no me dejes", "Orunoruno", "Wimaskui", "Mocha y rencorosa", 
+            "No lo vuelvo a hacer", "Dale a siii", "Pícale al verde gigante", 
+            "Plz", "Tqm", "Siii"
+        ];
 
         function iniciarMusica() {
-            if (musica.paused) {
+            if (primerClick) {
                 musica.volume = 0.2;
                 musica.play();
+                primerClick = false;
             }
         }
 
@@ -103,6 +113,47 @@
 
             let imagen = document.querySelector('.image');
             imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
+        }
+
+        function moverBoton() {
+            let botonNo = document.querySelector('.no');
+            let botonSi = document.querySelector('.yes');
+
+            if (primerClick) {
+                musica.volume = 0.2;
+                musica.play();
+                primerClick = false;
+            }
+
+            let maxWidth = window.innerWidth - botonNo.clientWidth;
+            let maxHeight = window.innerHeight - botonNo.clientHeight;
+
+            let siRect = botonSi.getBoundingClientRect();
+            let nuevoX, nuevoY;
+
+            do {
+                nuevoX = Math.random() * maxWidth;
+                nuevoY = Math.random() * maxHeight;
+            } while (
+                nuevoX + botonNo.clientWidth > siRect.left && nuevoX < siRect.right && 
+                nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
+            );
+
+            botonNo.style.position = "absolute";
+            botonNo.style.left = `${nuevoX}px`;
+            botonNo.style.top = `${nuevoY}px`;
+
+            cambiarTextoBotonNo();
+        }
+
+        function cambiarTextoBotonNo() {
+            let botonNo = document.querySelector('.no');
+            if (contadorNo < frasesNo.length - 1) {
+                contadorNo++;
+                botonNo.textContent = frasesNo[contadorNo];
+            } else {
+                botonNo.style.display = "none";
+            }
         }
 
         function lanzarConfeti() {
