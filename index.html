@@ -76,110 +76,25 @@
 </head>
 <body>
 
+    <audio id="musica" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie20.mp3" loop></audio>
+
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
-        <button class="btn yes" onclick="accionSi()">SÍ!!!</button>
+        <button class="btn yes" onclick="iniciarMusica(); mostrarMensaje()">SÍ!!!</button>
         <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
     </div>
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
-    <audio id="musicaFondo" loop>
-        <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie.mp3" type="audio/mpeg">
-        Tu navegador no soporta audio HTML5.
-    </audio>
-
     <script>
         let primerClick = true;
-        let audioIniciado = false;
-        let maxAncho = window.innerWidth * 0.8;
-        let minTamañoNo = 5;
-        let contadorNo = 0;
-        let frasesNo = [
-            "No", "pero segura?", "Segura?", "Segurísima?", "Por favor", 
-            "Segurisima?", "Sorry mi Bren", "Perdónameee", "Ya deja de darle aquí", 
-            "Di que si", "Apoco si muy enojada", "Ultima oportunidad", "Ultima ultima", 
-            "Pégame pero no me dejes", "Orunoruno", "Wimaskui", "Mocha y rencorosa", 
-            "No lo vuelvo a hacer", "Dale a siii", "Pícale al verde gigante", 
-            "Plz", "Tqm", "Siii"
-        ];
-
-        let audio = document.getElementById("musicaFondo");
-        audio.volume = 0.2; // Volumen real al 20%
+        let musica = document.getElementById("musica");
 
         function iniciarMusica() {
-            if (!audioIniciado) {
-                audio.play().then(() => {
-                    audioIniciado = true; // Evita que intente iniciarse varias veces
-                }).catch(error => console.log("El navegador bloqueó el autoplay:", error));
+            if (musica.paused) {
+                musica.volume = 0.2;
+                musica.play();
             }
-        }
-
-        function moverBoton() {
-            iniciarMusica(); // Iniciar música con la primera interacción
-            let botonNo = document.querySelector('.no');
-            let botonSi = document.querySelector('.yes');
-
-            if (primerClick) {
-                botonNo.style.position = "fixed";
-                primerClick = false;
-            }
-
-            let maxWidth = window.innerWidth - botonNo.clientWidth;
-            let maxHeight = window.innerHeight - botonNo.clientHeight;
-
-            let siRect = botonSi.getBoundingClientRect();
-            let nuevoX, nuevoY;
-
-            do {
-                nuevoX = Math.random() * maxWidth;
-                nuevoY = Math.random() * maxHeight;
-            } while (
-                nuevoX + botonNo.clientWidth > siRect.left && nuevoX < siRect.right && 
-                nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
-            );
-
-            botonNo.style.transition = "left 0.3s ease, top 0.3s ease";
-            botonNo.style.left = `${nuevoX}px`;
-            botonNo.style.top = `${nuevoY}px`;
-
-            modificarBotones();
-            cambiarTextoBotonNo();
-        }
-
-        function cambiarTextoBotonNo() {
-            let botonNo = document.querySelector('.no');
-            if (contadorNo < frasesNo.length - 1) {
-                contadorNo++;
-                botonNo.textContent = frasesNo[contadorNo];
-            } else {
-                botonNo.style.display = "none";
-            }
-        }
-
-        function modificarBotones() {
-            let botonSi = document.querySelector('.yes');
-            let botonNo = document.querySelector('.no');
-            
-            let tamañoSi = parseInt(window.getComputedStyle(botonSi).fontSize);
-            let tamañoNo = parseInt(window.getComputedStyle(botonNo).fontSize);
-
-            if (botonSi.clientWidth < maxAncho) {
-                botonSi.style.fontSize = (tamañoSi + 5) + "px";
-                botonSi.style.padding = `${10 + (tamañoSi - 18) / 2}px ${20 + (tamañoSi - 18) / 2}px`;
-            } else {
-                if (tamañoNo > minTamañoNo) {
-                    botonNo.style.fontSize = (tamañoNo - 2) + "px";
-                    botonNo.style.padding = `${10 + (tamañoNo - 18) / 2}px ${20 + (tamañoNo - 18) / 2}px`;
-                } else {
-                    botonNo.style.display = "none"; 
-                }
-            }
-        }
-
-        function accionSi() {
-            mostrarMensaje();
-            iniciarMusica(); // Asegurar que la música suene al primer clic
         }
 
         function mostrarMensaje() {
