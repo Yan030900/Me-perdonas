@@ -77,7 +77,7 @@
 <body onclick="iniciarMusica()">
 
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
-    <h2>¿Me perdonas?</h2>
+    <h2>¿Me perdonas Bren?</h2>  <!-- Cambio aquí -->
     <div class="buttons">
         <button class="btn yes" onclick="accionSi()">SÍ!!!</button>
         <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
@@ -98,14 +98,14 @@
         let frasesNo = [
             "No", "pero segura?", "Segura?", "Segurísima?", "Por favor", 
             "Segurisima?", "Sorry mi Bren", "Perdónameee", "Ya deja de darle aquí", 
-            "Di que si", "Apoco si muy enojada", "Ultima oportunidad", "Ultima ultima", 
+            "Di que sí cv", "Apoco si muy enojada", "Ultima oportunidad", "Ultima ultima", 
             "Pégame pero no me dejes", "Orunoruno", "Wimaskui", "Mocha y rencorosa", 
             "No lo vuelvo a hacer", "Dale a siii", "Pícale al verde gigante", 
             "Plz", "Tqm", "Siii"
-        ];
+        ];  // Cambio en la frase "Di que sí cv"
 
         let audio = document.getElementById("musicaFondo");
-        audio.volume = 0.2; // Volumen real al 20%
+        audio.volume = 0.2; 
 
         function iniciarMusica() {
             if (!audioIniciado) {
@@ -116,7 +116,7 @@
         }
 
         function moverBoton() {
-            iniciarMusica(); // Inicia música en la primera interacción
+            iniciarMusica();
             let botonNo = document.querySelector('.no');
             let botonSi = document.querySelector('.yes');
 
