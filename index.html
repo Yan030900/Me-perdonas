@@ -42,6 +42,8 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
+            position: relative;
+            width: 100%;
         }
         .btn {
             font-size: 18px;
@@ -62,7 +64,7 @@
         .no {
             background-color: red;
             color: white;
-            position: absolute;
+            position: relative;
             z-index: 5;
         }
         .hidden {
@@ -89,6 +91,8 @@
     <script>
         let musica = document.getElementById("musica");
         let primerClick = true;
+        let maxAncho = window.innerWidth * 0.8;
+        let minTamañoNo = 5;
         let contadorNo = 0;
         let frasesNo = [
             "No", "pero segura?", "Segura?", "Segurísima?", "Por favor", 
@@ -132,10 +136,12 @@
                 nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
             );
 
+            botonNo.style.position = "absolute";
             botonNo.style.transition = "left 0.3s ease, top 0.3s ease";
             botonNo.style.left = `${nuevoX}px`;
             botonNo.style.top = `${nuevoY}px`;
 
+            modificarBotones();
             cambiarTextoBotonNo();
         }
 
@@ -146,6 +152,26 @@
                 botonNo.textContent = frasesNo[contadorNo];
             } else {
                 botonNo.style.display = "none";
+            }
+        }
+
+        function modificarBotones() {
+            let botonSi = document.querySelector('.yes');
+            let botonNo = document.querySelector('.no');
+            
+            let tamañoSi = parseInt(window.getComputedStyle(botonSi).fontSize);
+            let tamañoNo = parseInt(window.getComputedStyle(botonNo).fontSize);
+
+            if (botonSi.clientWidth < maxAncho) {
+                botonSi.style.fontSize = (tamañoSi + 5) + "px";
+                botonSi.style.padding = `${10 + (tamañoSi - 18) / 2}px ${20 + (tamañoSi - 18) / 2}px`;
+            } else {
+                if (tamañoNo > minTamañoNo) {
+                    botonNo.style.fontSize = (tamañoNo - 2) + "px";
+                    botonNo.style.padding = `${10 + (tamañoNo - 18) / 2}px ${20 + (tamañoNo - 18) / 2}px`;
+                } else {
+                    botonNo.style.display = "none"; 
+                }
             }
         }
 
