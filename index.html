@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Me perdonas?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pacifico', cursive;
+        }
+        body {
+            text-align: center;
+            background-color: #FFD1DC;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        h2 {
+            color: #ff4d6d;
+            font-size: 30px;
+            animation: latido 1.5s infinite ease-in-out;
+        }
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .image {
+            width: 200px;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: font-size 0.2s ease-out, padding 0.2s ease-out;
+        }
+        .yes {
+            background-color: green;
+            color: white;
+            position: relative;
+            z-index: 10;
+            max-width: 100%;
+            white-space: nowrap;
+        }
+        .no {
+            background-color: red;
+            color: white;
+            position: relative;
+            z-index: 5;
+        }
+        .hidden {
+            display: none;
+            font-size: 22px;
+            color: #ff4081;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <img class="image" src="https://i.pinimg.com/originals/7e/75/63/7e75631b7c605c67a74ddf70c135b83f.gif" alt="Cinnamoroll triste">
+    <h2>¿Me perdonas?</h2>
+    <div class="buttons">
+        <button class="btn yes" onclick="mostrarMensaje()">SÍ!!!</button>
+        <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
+    </div>
+    <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
+
+    <script>
+        let primerClick = true;
+        let maxAncho = window.innerWidth * 0.8;
+        let minTamañoNo = 5;
+        let contadorNo = 0;
+        let frasesNo = [
+            "No", "pero segura?", "Segura?", "Segurísima?", "Por favor", 
+            "Segurisima?", "Sorry mi Bren", "Perdónameee", "Ya deja de darle aquí", 
+            "Di que si", "Apoco si muy enojada", "Ultima oportunidad", "Ultima ultima", 
+            "Pégame pero no me dejes", "Orunoruno", "Wimaskui", "Mocha y rencorosa", 
+            "No lo vuelvo a hacer", "Dale a siii", "Pícale al verde gigante", 
+            "Plz", "Tqm", "Siii"
+        ];
+
+        function moverBoton() {
+            let botonNo = document.querySelector('.no');
+            let botonSi = document.querySelector('.yes');
+
+            if (primerClick) {
+                botonNo.style.position = "fixed";
+                primerClick = false;
+            }
+
+            let maxWidth = window.innerWidth - botonNo.clientWidth;
+            let maxHeight = window.innerHeight - botonNo.clientHeight;
+
+            let siRect = botonSi.getBoundingClientRect();
+            let nuevoX, nuevoY;
+
+            do {
+                nuevoX = Math.random() * maxWidth;
+                nuevoY = Math.random() * maxHeight;
+            } while (
+                nuevoX + botonNo.clientWidth > siRect.left && nuevoX < siRect.right && 
+                nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
+            );
+
+            botonNo.style.transition = "left 0.3s ease, top 0.3s ease";
+            botonNo.style.left = `${nuevoX}px`;
+            botonNo.style.top = `${nuevoY}px`;
+
+            modificarBotones();
+            cambiarTextoBotonNo();
+        }
+
+        function cambiarTextoBotonNo() {
+            let botonNo = document.querySelector('.no');
+            if (contadorNo < frasesNo.length - 1) {
+                contadorNo++;
+                botonNo.textContent = frasesNo[contadorNo];
+            } else {
+                botonNo.style.display = "none";
+            }
+        }
+
+        function modificarBotones() {
+            let botonSi = document.querySelector('.yes');
+            let botonNo = document.querySelector('.no');
+            
+            let tamañoSi = parseInt(window.getComputedStyle(botonSi).fontSize);
+            let tamañoNo = parseInt(window.getComputedStyle(botonNo).fontSize);
+
+            if (botonSi.clientWidth < maxAncho) {
+                botonSi.style.fontSize = (tamañoSi + 5) + "px";
+                botonSi.style.padding = `${10 + (tamañoSi - 18) / 2}px ${20 + (tamañoSi - 18) / 2}px`;
+            } else {
+                if (tamañoNo > minTamañoNo) {
+                    botonNo.style.fontSize = (tamañoNo - 2) + "px";
+                    botonNo.style.padding = `${10 + (tamañoNo - 18) / 2}px ${20 + (tamañoNo - 18) / 2}px`;
+                } else {
+                    botonNo.style.display = "none"; 
+                }
+            }
+        }
+
+        function mostrarMensaje() {
+            document.getElementById("mensaje").style.display = "block";
+            lanzarConfeti();
+        }
+
+        function lanzarConfeti() {
+            let duracion = 2 * 1000;
+            let end = Date.now() + duracion;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    zIndex: 9999
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    zIndex: 9999
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+    </script>
+
+</body>
+</html>
