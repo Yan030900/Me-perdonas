@@ -74,7 +74,7 @@
         }
     </style>
 </head>
-<body>
+<body onclick="iniciarMusica()">
 
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
@@ -85,7 +85,7 @@
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
     <audio id="musicaFondo" loop>
-        <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie20.mp3" type="audio/mpeg">
         Tu navegador no soporta audio HTML5.
     </audio>
 
@@ -110,13 +110,13 @@
         function iniciarMusica() {
             if (!audioIniciado) {
                 audio.play().then(() => {
-                    audioIniciado = true; // Evita que intente iniciarse varias veces
+                    audioIniciado = true;
                 }).catch(error => console.log("El navegador bloqueó el autoplay:", error));
             }
         }
 
         function moverBoton() {
-            iniciarMusica(); // Iniciar música con la primera interacción
+            iniciarMusica(); // Inicia música en la primera interacción
             let botonNo = document.querySelector('.no');
             let botonSi = document.querySelector('.yes');
 
@@ -179,7 +179,7 @@
 
         function accionSi() {
             mostrarMensaje();
-            iniciarMusica(); // Asegurar que la música suene al primer clic
+            iniciarMusica();
         }
 
         function mostrarMensaje() {
@@ -195,20 +195,8 @@
             let end = Date.now() + duracion;
 
             (function frame() {
-                confetti({
-                    particleCount: 7,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    zIndex: 9999
-                });
-                confetti({
-                    particleCount: 7,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    zIndex: 9999
-                });
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, zIndex: 9999 });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, zIndex: 9999 });
 
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
