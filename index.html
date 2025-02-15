@@ -42,8 +42,6 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            position: relative;
-            width: 100%;
         }
         .btn {
             font-size: 18px;
@@ -56,6 +54,8 @@
         .yes {
             background-color: green;
             color: white;
+            position: relative;
+            z-index: 10;
             max-width: 100%;
             white-space: nowrap;
         }
@@ -76,19 +76,22 @@
 </head>
 <body>
 
-    <audio id="musica" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie20.mp3" loop></audio>
-
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
-        <button class="btn yes" onclick="iniciarMusica(); mostrarMensaje()">SÍ!!!</button>
-        <button class="btn no" onclick="iniciarMusica(); moverBoton()" onmouseenter="iniciarMusica(); moverBoton()" onmouseover="iniciarMusica(); moverBoton()">No.</button>
+        <button class="btn yes" onclick="accionSi()">SÍ!!!</button>
+        <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
     </div>
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
+    <audio id="musicaFondo" loop>
+        <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
     <script>
-        let musica = document.getElementById("musica");
         let primerClick = true;
+        let audioIniciado = false;
         let maxAncho = window.innerWidth * 0.8;
         let minTamañoNo = 5;
         let contadorNo = 0;
@@ -101,24 +104,26 @@
             "Plz", "Tqm", "Siii"
         ];
 
+        let audio = document.getElementById("musicaFondo");
+        audio.volume = 0.2; // Volumen real al 20%
+
         function iniciarMusica() {
-            if (primerClick) {
-                musica.play();
-                primerClick = false;
+            if (!audioIniciado) {
+                audio.play().then(() => {
+                    audioIniciado = true; // Evita que intente iniciarse varias veces
+                }).catch(error => console.log("El navegador bloqueó el autoplay:", error));
             }
         }
 
-        function mostrarMensaje() {
-            document.getElementById("mensaje").style.display = "block";
-            lanzarConfeti();
-
-            let imagen = document.querySelector('.image');
-            imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
-        }
-
         function moverBoton() {
+            iniciarMusica(); // Iniciar música con la primera interacción
             let botonNo = document.querySelector('.no');
             let botonSi = document.querySelector('.yes');
+
+            if (primerClick) {
+                botonNo.style.position = "fixed";
+                primerClick = false;
+            }
 
             let maxWidth = window.innerWidth - botonNo.clientWidth;
             let maxHeight = window.innerHeight - botonNo.clientHeight;
@@ -134,7 +139,6 @@
                 nuevoY + botonNo.clientHeight > siRect.top && nuevoY < siRect.bottom 
             );
 
-            botonNo.style.position = "absolute";
             botonNo.style.transition = "left 0.3s ease, top 0.3s ease";
             botonNo.style.left = `${nuevoX}px`;
             botonNo.style.top = `${nuevoY}px`;
@@ -171,6 +175,19 @@
                     botonNo.style.display = "none"; 
                 }
             }
+        }
+
+        function accionSi() {
+            mostrarMensaje();
+            iniciarMusica(); // Asegurar que la música suene al primer clic
+        }
+
+        function mostrarMensaje() {
+            document.getElementById("mensaje").style.display = "block";
+            lanzarConfeti();
+
+            let imagen = document.querySelector('.image');
+            imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
         }
 
         function lanzarConfeti() {
