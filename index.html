@@ -79,7 +79,7 @@
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
     <h2>¿Me perdonas?</h2>
     <div class="buttons">
-        <button class="btn yes" onclick="mostrarMensaje()">SÍ!!!</button>
+        <button class="btn yes" onclick="accionSi()">SÍ!!!</button>
         <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
     </div>
     <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
@@ -91,6 +91,7 @@
 
     <script>
         let primerClick = true;
+        let audioIniciado = false;
         let maxAncho = window.innerWidth * 0.8;
         let minTamañoNo = 5;
         let contadorNo = 0;
@@ -104,11 +105,13 @@
         ];
 
         let audio = document.getElementById("musicaFondo");
-        audio.volume = 0.2; // Volumen al 20%
+        audio.volume = 0.2; // Volumen real al 20%
 
         function iniciarMusica() {
-            if (audio.paused) {
-                audio.play().catch(error => console.log("El navegador bloqueó el autoplay:", error));
+            if (!audioIniciado) {
+                audio.play().then(() => {
+                    audioIniciado = true; // Evita que intente iniciarse varias veces
+                }).catch(error => console.log("El navegador bloqueó el autoplay:", error));
             }
         }
 
@@ -174,10 +177,14 @@
             }
         }
 
+        function accionSi() {
+            mostrarMensaje();
+            iniciarMusica(); // Asegurar que la música suene al primer clic
+        }
+
         function mostrarMensaje() {
             document.getElementById("mensaje").style.display = "block";
             lanzarConfeti();
-            iniciarMusica(); // Iniciar música con la primera interacción
 
             let imagen = document.querySelector('.image');
             imagen.src = "https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2020.gif?" + new Date().getTime();
