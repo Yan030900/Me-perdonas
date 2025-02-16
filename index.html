@@ -65,24 +65,16 @@
             position: relative;
             z-index: 5;
         }
-        .hidden {
-            display: none;
-            font-size: 22px;
-            color: #ff4081;
-            margin-top: 20px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body onclick="iniciarMusica()">
 
     <img class="image" src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/main/IMG_2018.gif" alt="Cinnamoroll triste">
-    <h2>¿Me perdonas Bren?</h2>  <!-- Cambio aquí -->
+    <h2 id="titulo">¿Me perdonas Bren?</h2>  <!-- Se agregó id al título -->
     <div class="buttons">
         <button class="btn yes" onclick="accionSi()">SÍ!!!</button>
         <button class="btn no" onclick="moverBoton()" onmouseenter="moverBoton()" onmouseover="moverBoton()">No.</button>
     </div>
-    <p class="hidden" id="mensaje">Te quiero mucho mi nahualita ❤️</p>
 
     <audio id="musicaFondo" loop>
         <source src="https://raw.githubusercontent.com/Yan030900/Me-perdonas/refs/heads/main/Potaxie20.mp3" type="audio/mpeg">
@@ -102,7 +94,7 @@
             "Pégame pero no me dejes", "Orunoruno", "Wimaskui", "Mocha y rencorosa", 
             "No lo vuelvo a hacer", "Dale a siii", "Pícale al verde gigante", 
             "Plz", "Tqm", "Siii"
-        ];  // Cambio en la frase "Di que sí cv"
+        ];  // "Di que sí cv" ya está en la lista
 
         let audio = document.getElementById("musicaFondo");
         audio.volume = 0.2; 
@@ -178,12 +170,12 @@
         }
 
         function accionSi() {
-            mostrarMensaje();
+            cambiarTitulo();
             iniciarMusica();
         }
 
-        function mostrarMensaje() {
-            document.getElementById("mensaje").style.display = "block";
+        function cambiarTitulo() {
+            document.getElementById("titulo").textContent = "Te quiero mucho mi nahualita ❤️";
             lanzarConfeti();
 
             let imagen = document.querySelector('.image');
